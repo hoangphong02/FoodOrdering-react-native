@@ -3,14 +3,22 @@ import { Image, Text, View, StyleSheet, Pressable } from "react-native"
 import products from "@assets/data/products";
 import { DEFAULT_ICON_SIZE } from "@expo/vector-icons/build/createIconSet";
 import { useState } from "react";
+import Button from "@/components/Button";
+import { useCart } from "@/provider/CartProvider";
+import { PizzaSize } from "@/types";
 export const PizzaNotFound ='https://notjustdev-dummy.s3.us-east-2.amazonaws.com/food/6cheese.png'
 const ProductDetailsScreen = () => {
-  const [selectedSize, setSelectedSize] = useState('S')
-  const size = ['S','M','L','XL']
+  const [selectedSize, setSelectedSize] = useState<PizzaSize>('S')
+  const size: PizzaSize[] = ['S','M','L','XL']
   const {id} = useLocalSearchParams();
+  const {addItem} = useCart()
   const product = products?.find((pro)=> pro.id.toString() === id)
   if(!product){
     return <Text>Product not found</Text>
+  }
+  const addToCart = () => {
+    if(!product){return}
+    addItem(product, selectedSize)
   }
   return (
     <View style={styles.container}> 
@@ -30,6 +38,7 @@ const ProductDetailsScreen = () => {
           }
         </View>
         <Text style={styles.price}>${product.price}</Text>
+        <Button text="Add cart" onPress={addToCart}/>
     </View>
   )
 }
@@ -43,7 +52,9 @@ const styles = StyleSheet.create({
     aspectRatio:1
   }, 
   price: {
-    fontWeight:'bold'
+    fontSize: 18,
+    fontWeight:'bold',
+    marginTop: 'auto',
   },
   sizes: {
     display:'flex',
