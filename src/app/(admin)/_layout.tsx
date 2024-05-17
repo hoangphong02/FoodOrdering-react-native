@@ -12,7 +12,6 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: Colors.light.background,
-        // headerShown: false,
         tabBarStyle: {
           backgroundColor:Colors.light.tint
         }
@@ -44,12 +43,13 @@ export default function TabLayout() {
         
       />
       <Tabs.Screen
-        name="explore"
+        name="orders"
         options={{
           title: 'Orders',
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name={focused ? 'menu' : 'menu-outline'} color={color} />
           ),
+          headerShown: false,
         }}
       />
     </Tabs>

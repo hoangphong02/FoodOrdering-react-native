@@ -1,4 +1,5 @@
 import { useColorScheme } from '@/hooks/useColorScheme.web';
+import AuthProvider from '@/provider/AuthProvider';
 import CartProvider from '@/provider/CartProvider';
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
@@ -29,6 +30,7 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+      <AuthProvider>
       <CartProvider>
       <Stack>
         <Stack.Screen name="(auth)" options={{ headerShown: false }} />
@@ -38,6 +40,7 @@ export default function RootLayout() {
         
       </Stack>
       </CartProvider>
+      </AuthProvider>
     </ThemeProvider>
   );
 }

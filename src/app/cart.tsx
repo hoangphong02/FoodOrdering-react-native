@@ -16,7 +16,7 @@ const CartScreen = () => {
       contentContainerStyle={{ gap: 10 }}
         />
       
-      <Text style={styles.total} >Total: ${total}</Text>
+      <Text style={styles.total} >Total: ${total.toFixed(2)}</Text>
       <Button text='Checkout'/>
 
         <StatusBar style={Platform.OS==='ios'?'light': 'auto'}/>

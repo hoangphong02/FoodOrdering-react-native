@@ -11,8 +11,9 @@ type OrderListItemProps ={
   order: Order
 }
 const OrderListItem = ({order}: OrderListItemProps) => {
+  const segments = useSegments()
     return (
-      <Link href={`/(user)/orders/${order.id}`} asChild>
+      <Link href={`/${segments[0]}/orders/${order.id}`} asChild>
         <Pressable style={styles.container}>
          <View style={styles.info}>
          <Text style={styles.name}>Order #{order.id}</Text>
@@ -30,8 +31,6 @@ const styles = StyleSheet.create({
    backgroundColor: "#fff", 
    borderRadius: 10,
    padding:10,
-   flex:1 ,
-   marginBottom: 10,
    justifyContent: "space-between",
    flexDirection:'row',
    alignItems:'center'
@@ -43,6 +42,6 @@ const styles = StyleSheet.create({
   info: {
     flexDirection: 'column',
     alignItems:"center",
-    gap:10
+    gap:10,
   }
 });

@@ -76,7 +76,6 @@ const create = () => {
         console.warn('Confirm delete')
     }
     
-    //2.53.38
   return (
     <View style={styles.container} >
         <Stack.Screen options={{title: isUpdating? 'Update Product': 'Create Product'}}/>

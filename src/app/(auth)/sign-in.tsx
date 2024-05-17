@@ -1,13 +1,15 @@
 import Button from "@/components/Button"
 import { Colors } from "@/constants/Colors"
+import { supabase } from "@/lib/supabase"
 import { Link, Stack } from "expo-router"
 import { useState } from "react"
-import { StyleSheet, Text, TextInput, View } from "react-native"
+import { Alert, StyleSheet, Text, TextInput, View } from "react-native"
 
 const signInScreen = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [errors, setErrors] = useState('')
+    const [loading ,setLoading] = useState(false)
 
       const validateInput =()=>{
         setErrors('')
@@ -25,12 +27,11 @@ const signInScreen = () => {
         setEmail('')
         setPassword('')
     }
-    const signIn = () => {
-        if(!validateInput()){
-            return;
-        }
-
-        resetFields()
+    const signIn = async () => {
+        setLoading(true)
+        const {error} = await supabase.auth.signInWithPassword({email, password});
+        if(error) Alert.alert(error.message)
+         setLoading(false)
     }
 
   return (
@@ -41,7 +42,7 @@ const signInScreen = () => {
         <Text style={styles.label}>Password:</Text>
         <TextInput style={styles.input} placeholder="password" value={password} onChangeText={setPassword}/>
         <Text style={{color:"red"}}>{errors}</Text>
-        <Button text='Sign in' onPress={signIn}/>
+        <Button text={loading? 'Sign in ...': 'Sign in' } disabled={loading} onPress={signIn}/>
         <Link href='/(auth)/sign-up' style={styles.btnSelectCreateAccount}>
             <Text >Create an account</Text>
         </Link>
